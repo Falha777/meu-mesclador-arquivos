@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from pypdf import PdfWriter
-from io import BytesIO
+from openpyxl import BytesIO
 
 # Configuração da página
 st.set_page_config(page_title="Super Mesclador", layout="centered")
@@ -83,4 +83,5 @@ elif opcao == "Mesclar Planilhas (CSV/Excel)":
                 )
             except Exception as e:
                 st.error(f"Erro ao processar os arquivos: {e}")
+
                 st.info("Dica: Certifique-se de que todas as planilhas têm as mesmas colunas.")
