@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from pypdf import PdfWriter
-from openpyxl import BytesIO
+from io import BytesIO  # <--- CORRIGIDO AQUI
 
 # Configuração da página
 st.set_page_config(page_title="Super Mesclador", layout="centered")
@@ -48,6 +48,9 @@ if opcao == "Mesclar PDFs":
 elif opcao == "Mesclar Planilhas (CSV/Excel)":
     st.header("📊 Juntar Planilhas")
     st.write("Junte vários arquivos CSV ou Excel em uma única tabela mestre.")
+    
+    # O conceito visual é pegar várias tabelas e empilhar verticalmente
+    # 
 
     # Upload
     uploaded_sheets = st.file_uploader("Arraste suas planilhas aqui", type=["csv", "xlsx"], accept_multiple_files=True)
@@ -62,6 +65,7 @@ elif opcao == "Mesclar Planilhas (CSV/Excel)":
                     if arquivo.name.endswith('.csv'):
                         df = pd.read_csv(arquivo)
                     else:
+                        # O pandas usa o openpyxl internamente aqui
                         df = pd.read_excel(arquivo)
                     lista_de_dados.append(df)
                 
@@ -83,5 +87,4 @@ elif opcao == "Mesclar Planilhas (CSV/Excel)":
                 )
             except Exception as e:
                 st.error(f"Erro ao processar os arquivos: {e}")
-
                 st.info("Dica: Certifique-se de que todas as planilhas têm as mesmas colunas.")
